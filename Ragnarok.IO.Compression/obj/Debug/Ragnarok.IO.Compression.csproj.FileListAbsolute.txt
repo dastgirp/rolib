@@ -1,0 +1,10 @@
+C:\Documents and Settings\Poring Assassin\My Documents\Visual Studio 2008\Projects\Ragnarok\Ragnarok.IO.Compression\obj\Debug\ResolveAssemblyReference.cache
+C:\Documents and Settings\Poring Assassin\My Documents\Visual Studio 2008\Projects\Ragnarok\Ragnarok.IO.Compression\bin\Debug\Ragnarok.IO.Compression.XML
+C:\Documents and Settings\Poring Assassin\My Documents\Visual Studio 2008\Projects\Ragnarok\Ragnarok.IO.Compression\bin\Debug\Ragnarok.IO.Compression.dll
+C:\Documents and Settings\Poring Assassin\My Documents\Visual Studio 2008\Projects\Ragnarok\Ragnarok.IO.Compression\bin\Debug\Ragnarok.IO.Compression.pdb
+C:\Documents and Settings\Poring Assassin\My Documents\Visual Studio 2008\Projects\Ragnarok\Ragnarok.IO.Compression\bin\Debug\Ionic.Zlib.dll
+C:\Documents and Settings\Poring Assassin\My Documents\Visual Studio 2008\Projects\Ragnarok\Ragnarok.IO.Compression\bin\Debug\Ragnarok.dll
+C:\Documents and Settings\Poring Assassin\My Documents\Visual Studio 2008\Projects\Ragnarok\Ragnarok.IO.Compression\bin\Debug\Ragnarok.pdb
+C:\Documents and Settings\Poring Assassin\My Documents\Visual Studio 2008\Projects\Ragnarok\Ragnarok.IO.Compression\bin\Debug\Ionic.Zlib.xml
+C:\Documents and Settings\Poring Assassin\My Documents\Visual Studio 2008\Projects\Ragnarok\Ragnarok.IO.Compression\obj\Debug\Ragnarok.IO.Compression.dll
+C:\Documents and Settings\Poring Assassin\My Documents\Visual Studio 2008\Projects\Ragnarok\Ragnarok.IO.Compression\obj\Debug\Ragnarok.IO.Compression.pdb

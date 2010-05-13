@@ -1,0 +1,588 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Ragnarok.IO.Compression</name>
+    </assembly>
+    <members>
+        <member name="T:Ragnarok.IO.Compression.GrfFileFlags">
+            <summary>
+            Provides attributes for a <see cref="T:Ragnarok.IO.Compression.GrfItem"/>.
+            </summary>
+        </member>
+        <member name="F:Ragnarok.IO.Compression.GrfFileFlags.None">
+            <summary>
+            This flag specifies that a <see cref="T:Ragnarok.IO.Compression.GrfItem"/> entry is a directory.
+            </summary>
+        </member>
+        <member name="F:Ragnarok.IO.Compression.GrfFileFlags.File">
+            <summary>
+            This flag specifies that a <see cref="T:Ragnarok.IO.Compression.GrfItem"/> entry is a file. If not set, then the entry is a directory.
+            </summary>
+        </member>
+        <member name="F:Ragnarok.IO.Compression.GrfFileFlags.MixCrypt">
+            <summary>
+            Flag for <see cref="P:Ragnarok.IO.Compression.GrfItem.Flags"/> to specify that the file uses mixed crypto.
+            </summary>
+        </member>
+        <member name="F:Ragnarok.IO.Compression.GrfFileFlags.Des_0x14">
+            <summary>
+            Flag for <see cref="P:Ragnarok.IO.Compression.GrfItem.Flags"/> to specify that only the first 0x14 blocks are encrypted.
+            </summary>
+        </member>
+        <member name="T:Ragnarok.IO.Compression.GrfFileInfo">
+            <summary>
+            A file entry in a <see cref="T:Ragnarok.IO.Compression.GrfArchive"/>.
+            </summary>
+        </member>
+        <member name="T:Ragnarok.IO.Compression.GrfItem">
+            <summary>
+            The base class of an entry in a <see cref="T:Ragnarok.IO.Compression.GrfArchive"/>.
+            </summary>
+        </member>
+        <member name="F:Ragnarok.IO.Compression.GrfItem.m_Grf">
+            <summary>
+            The parent <see cref="T:Ragnarok.IO.Compression.GrfArchive"/>.
+            </summary>
+        </member>
+        <member name="F:Ragnarok.IO.Compression.GrfItem.m_Flags">
+            <summary>
+            The <see cref="T:Ragnarok.IO.Compression.GrfFileFlags"/> for this entry.
+            </summary>
+        </member>
+        <member name="F:Ragnarok.IO.Compression.GrfItem.m_Name">
+            <summary>
+            The name of this entry.
+            </summary>
+        </member>
+        <member name="F:Ragnarok.IO.Compression.GrfItem.m_Hash">
+            <summary>
+            The hash created from the name of this entry.
+            </summary>
+        </member>
+        <member name="F:Ragnarok.IO.Compression.GrfItem.m_AlignedCompressedLength">
+            <summary>
+            The size on the the file on the disk.
+            </summary>
+        </member>
+        <member name="F:Ragnarok.IO.Compression.GrfItem.m_CompressedLength">
+            <summary>
+            The compressed size of the file.
+            </summary>
+        </member>
+        <member name="F:Ragnarok.IO.Compression.GrfItem.m_Length">
+            <summary>
+            The size of the original file.
+            </summary>
+        </member>
+        <member name="F:Ragnarok.IO.Compression.GrfItem.m_Position">
+            <summary>
+            The position in the <see cref="T:Ragnarok.IO.Compression.GrfArchive"/> where this file is located.
+            </summary>
+        </member>
+        <member name="M:Ragnarok.IO.Compression.GrfItem.ExtractTo(System.String)">
+            <summary>
+            Extracts this item to a specific location.
+            </summary>
+            <param name="path">The location where to extract this item to.</param>
+        </member>
+        <member name="M:Ragnarok.IO.Compression.GrfItem.NameHash(System.String)">
+            <summary>
+            Creates a hash from a filename.
+            </summary>
+            <param name="name">The filename.</param>
+            <returns>A hash from the specified filename.</returns>
+        </member>
+        <member name="M:Ragnarok.IO.Compression.GrfItem.EncodeName(System.String)">
+            <summary>
+            Encodes the name with the proper encoding.
+            </summary>
+            <param name="name">The name to encode.</param>
+            <returns>A <see cref="T:System.String"/> with the properly encoded filename.</returns>
+        </member>
+        <member name="P:Ragnarok.IO.Compression.GrfItem.Archive">
+            <summary>
+            The parent <see cref="T:Ragnarok.IO.Compression.GrfArchive"/>.
+            </summary>
+        </member>
+        <member name="P:Ragnarok.IO.Compression.GrfItem.Flags">
+            <summary>
+            The <see cref="T:Ragnarok.IO.Compression.GrfFileFlags"/> for this entry.
+            </summary>
+        </member>
+        <member name="P:Ragnarok.IO.Compression.GrfItem.FullName">
+            <summary>
+            The full name of this entry.
+            </summary>
+        </member>
+        <member name="P:Ragnarok.IO.Compression.GrfItem.Name">
+            <summary>
+            The name of this entry.
+            </summary>
+        </member>
+        <member name="P:Ragnarok.IO.Compression.GrfItem.Hash">
+            <summary>
+            The hash created from the full name of this entry.
+            </summary>
+        </member>
+        <member name="M:Ragnarok.IO.Compression.GrfFileInfo.ExtractTo(System.String)">
+            <summary>
+            Extracts the file to a specific location.
+            </summary>
+            <param name="path">The location where to extract this file to.</param>
+        </member>
+        <member name="P:Ragnarok.IO.Compression.GrfFileInfo.AlignedCompressedLength">
+            <summary>
+            The size on the the file on the disk.
+            </summary>
+        </member>
+        <member name="P:Ragnarok.IO.Compression.GrfFileInfo.CompressedLength">
+            <summary>
+            The compressed size of the file.
+            </summary>
+        </member>
+        <member name="P:Ragnarok.IO.Compression.GrfFileInfo.Length">
+            <summary>
+            The size of the original file.
+            </summary>
+        </member>
+        <member name="P:Ragnarok.IO.Compression.GrfFileInfo.Position">
+            <summary>
+            The position in the <see cref="T:Ragnarok.IO.Compression.GrfArchive"/> where this file is located.
+            </summary>
+        </member>
+        <member name="P:Ragnarok.IO.Compression.GrfFileInfo.Data">
+            <summary>
+            The contents of the file.
+            </summary>
+        </member>
+        <member name="T:Ragnarok.IO.Compression.GrfItemCollection">
+            <summary>
+            A class within a <see cref="T:Ragnarok.IO.Compression.GrfArchive"/> that contains all the entries.
+            </summary>
+        </member>
+        <member name="M:Ragnarok.IO.Compression.GrfItemCollection.AddFile(System.String,System.String)">
+            <summary>
+            Adds a file to the <see cref="T:Ragnarok.IO.Compression.GrfArchive"/>
+            </summary>
+            <param name="grfname">The filename inside the <see cref="T:Ragnarok.IO.Compression.GrfArchive"/>.</param>
+            <param name="filename">The filename on the disk.</param>
+            <exception cref="T:System.ObjectDisposedException">
+            Thrown when the <see cref="T:Ragnarok.IO.Compression.GrfArchive"/> is closed.
+            </exception>
+            <exception cref="T:System.AccessViolationException">
+            Thrown when the <see cref="T:Ragnarok.IO.Compression.GrfArchive"/> is read-only.
+            </exception>
+        </member>
+        <member name="M:Ragnarok.IO.Compression.GrfItemCollection.AddFile(System.String,System.IO.Stream)">
+            <summary>
+            Adds a file to the <see cref="T:Ragnarok.IO.Compression.GrfArchive"/>
+            </summary>
+            <param name="grfname">The filename inside the <see cref="T:Ragnarok.IO.Compression.GrfArchive"/>.</param>
+            <param name="content">The contents of the file.</param>
+            <exception cref="T:System.ObjectDisposedException">
+            Thrown when the <see cref="T:Ragnarok.IO.Compression.GrfArchive"/> is closed.
+            </exception>
+            <exception cref="T:System.AccessViolationException">
+            Thrown when the <see cref="T:Ragnarok.IO.Compression.GrfArchive"/> is read-only.
+            </exception>
+        </member>
+        <member name="M:Ragnarok.IO.Compression.GrfItemCollection.AddFile(System.String,System.Byte[])">
+            <summary>
+            Adds a file to the <see cref="T:Ragnarok.IO.Compression.GrfArchive"/>
+            </summary>
+            <param name="grfname">The filename inside the <see cref="T:Ragnarok.IO.Compression.GrfArchive"/>.</param>
+            <param name="content">The contents of the file.</param>
+            <exception cref="T:System.ObjectDisposedException">
+            Thrown when the <see cref="T:Ragnarok.IO.Compression.GrfArchive"/> is closed.
+            </exception>
+            <exception cref="T:System.AccessViolationException">
+            Thrown when the <see cref="T:Ragnarok.IO.Compression.GrfArchive"/> is read-only.
+            </exception>
+        </member>
+        <member name="M:Ragnarok.IO.Compression.GrfItemCollection.AddDirectory(System.String)">
+            <summary>
+            Adds a directory to the <see cref="T:Ragnarok.IO.Compression.GrfArchive"/>
+            </summary>
+            <param name="grfname">The directoryname inside the <see cref="T:Ragnarok.IO.Compression.GrfArchive"/>.</param>
+            <exception cref="T:System.ObjectDisposedException">
+            Thrown when the <see cref="T:Ragnarok.IO.Compression.GrfArchive"/> is closed.
+            </exception>
+            <exception cref="T:System.AccessViolationException">
+            Thrown when the <see cref="T:Ragnarok.IO.Compression.GrfArchive"/> is read-only.
+            </exception>
+        </member>
+        <member name="M:Ragnarok.IO.Compression.GrfItemCollection.Add(Ragnarok.IO.Compression.GrfItem)">
+            <summary>
+            Adds a <see cref="T:Ragnarok.IO.Compression.GrfItem"/> to the <see cref="T:Ragnarok.IO.Compression.GrfArchive"/>.
+            </summary>
+            <param name="item">The <see cref="T:Ragnarok.IO.Compression.GrfItem"/> to add.</param>
+            <exception cref="T:System.ObjectDisposedException">
+            Thrown when the <see cref="T:Ragnarok.IO.Compression.GrfArchive"/> is closed.
+            </exception>
+            <exception cref="T:System.AccessViolationException">
+            Thrown when the <see cref="T:Ragnarok.IO.Compression.GrfArchive"/> is read-only.
+            </exception>
+        </member>
+        <member name="M:Ragnarok.IO.Compression.GrfItemCollection.Remove(System.String)">
+            <summary>
+            Removes a <see cref="T:Ragnarok.IO.Compression.GrfItem"/> from the <see cref="T:Ragnarok.IO.Compression.GrfArchive"/>.
+            </summary>
+            <param name="grfname">The internal filename of the <see cref="T:Ragnarok.IO.Compression.GrfItem"/>.</param>
+            <returns>A <see cref="T:System.Boolean"/> indicating success of the operation.</returns>
+            <exception cref="T:System.ObjectDisposedException">
+            Thrown when the <see cref="T:Ragnarok.IO.Compression.GrfArchive"/> is closed.
+            </exception>
+            <exception cref="T:System.AccessViolationException">
+            Thrown when the <see cref="T:Ragnarok.IO.Compression.GrfArchive"/> is read-only.
+            </exception>
+        </member>
+        <member name="M:Ragnarok.IO.Compression.GrfItemCollection.Remove(Ragnarok.IO.Compression.GrfItem)">
+            <summary>
+            Removes a <see cref="T:Ragnarok.IO.Compression.GrfItem"/> from the <see cref="T:Ragnarok.IO.Compression.GrfArchive"/>.
+            </summary>
+            <param name="item">The <see cref="T:Ragnarok.IO.Compression.GrfItem"/> to remove.</param>
+            <returns>A <see cref="T:System.Boolean"/> indicating success of the operation.</returns>
+            <exception cref="T:System.ObjectDisposedException">
+            Thrown when the <see cref="T:Ragnarok.IO.Compression.GrfArchive"/> is closed.
+            </exception>
+            <exception cref="T:System.AccessViolationException">
+            Thrown when the <see cref="T:Ragnarok.IO.Compression.GrfArchive"/> is read-only.
+            </exception>
+        </member>
+        <member name="M:Ragnarok.IO.Compression.GrfItemCollection.RemoveAt(System.Int32)">
+            <summary>
+            Removes a <see cref="T:Ragnarok.IO.Compression.GrfItem"/> from the <see cref="T:Ragnarok.IO.Compression.GrfArchive"/>.
+            </summary>
+            <param name="index">The index of the <see cref="T:Ragnarok.IO.Compression.GrfItem"/>.</param>
+            <returns>A <see cref="T:System.Boolean"/> indicating success of the operation.</returns>
+            <exception cref="T:System.ObjectDisposedException">
+            Thrown when the <see cref="T:Ragnarok.IO.Compression.GrfArchive"/> is closed.
+            </exception>
+            <exception cref="T:System.AccessViolationException">
+            Thrown when the <see cref="T:Ragnarok.IO.Compression.GrfArchive"/> is read-only.
+            </exception>
+        </member>
+        <member name="M:Ragnarok.IO.Compression.GrfItemCollection.IndexOf(System.String)">
+            <summary>
+            Gets the index of a <see cref="T:Ragnarok.IO.Compression.GrfItem"/>.
+            </summary>
+            <param name="name">The name of the <see cref="T:Ragnarok.IO.Compression.GrfItem"/>.</param>
+            <returns>The index of the <see cref="T:Ragnarok.IO.Compression.GrfItem"/> or -1 if the item is not found.</returns>
+        </member>
+        <member name="M:Ragnarok.IO.Compression.GrfItemCollection.IndexOf(Ragnarok.IO.Compression.GrfItem)">
+            <summary>
+            Gets the index of a <see cref="T:Ragnarok.IO.Compression.GrfItem"/>.
+            </summary>
+            <param name="item">The <see cref="T:Ragnarok.IO.Compression.GrfItem"/>.</param>
+            <returns>The index of the <see cref="T:Ragnarok.IO.Compression.GrfItem"/> or -1 if the item is not found.</returns>
+        </member>
+        <member name="M:Ragnarok.IO.Compression.GrfItemCollection.Clear">
+            <summary>
+            Removes all <see cref="T:Ragnarok.IO.Compression.GrfItem"/> entries from the <see cref="T:Ragnarok.IO.Compression.GrfArchive"/>.
+            </summary>
+            <exception cref="T:System.ObjectDisposedException">
+            Thrown when the <see cref="T:Ragnarok.IO.Compression.GrfArchive"/> is closed.
+            </exception>
+            <exception cref="T:System.AccessViolationException">
+            Thrown when the <see cref="T:Ragnarok.IO.Compression.GrfArchive"/> is read-only.
+            </exception>
+        </member>
+        <member name="M:Ragnarok.IO.Compression.GrfItemCollection.Contains(Ragnarok.IO.Compression.GrfItem)">
+            <summary>
+            Determines wether a <see cref="T:Ragnarok.IO.Compression.GrfItem"/> exits within the <see cref="T:Ragnarok.IO.Compression.GrfArchive"/>.
+            </summary>
+            <param name="item">The <see cref="T:Ragnarok.IO.Compression.GrfItem"/>.</param>
+            <returns>A <see cref="T:System.Boolean"/> indicating wether or not an item exits in the <see cref="T:Ragnarok.IO.Compression.GrfArchive"/>.</returns>
+        </member>
+        <member name="M:Ragnarok.IO.Compression.GrfItemCollection.CopyTo(Ragnarok.IO.Compression.GrfItem[],System.Int32)">
+            <summary>
+            Copies all <see cref="T:Ragnarok.IO.Compression.GrfItem"/> entries to an array.
+            </summary>
+            <param name="array">The array to copy to.</param>
+            <param name="arrayIndex">A <see cref="T:System.Int32"/> indicating the index of the array to start copying at.</param>
+        </member>
+        <member name="M:Ragnarok.IO.Compression.GrfItemCollection.GetEnumerator">
+            <summary>
+            Returns an enumerator that iterates through the <see cref="T:Ragnarok.IO.Compression.GrfItemCollection"/>.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Ragnarok.IO.Compression.GrfItemCollection.Add(System.String,Ragnarok.IO.Compression.GrfFileFlags,System.Byte[])">
+            <summary>
+            Adds a new <see cref="T:Ragnarok.IO.Compression.GrfItem"/> to the <see cref="T:Ragnarok.IO.Compression.GrfArchive"/>.
+            </summary>
+            <param name="grfname">The filename inside the <see cref="T:Ragnarok.IO.Compression.GrfArchive"/>.</param>
+            <param name="flags">The <see cref="T:Ragnarok.IO.Compression.GrfFileFlags"/> for this entry.</param>
+            <param name="data">The data of the file, or null if the <see cref="T:Ragnarok.IO.Compression.GrfItem"/> is a folder.</param>
+            <exception cref="T:System.ObjectDisposedException">
+            Thrown when the <see cref="T:Ragnarok.IO.Compression.GrfArchive"/> is closed.
+            </exception>
+            <exception cref="T:System.ArgumentNullException">
+            Thrown when the grfname is null or empty, or when the flags indicate a file and the data is null.
+            </exception>
+            <exception cref="T:System.AccessViolationException">
+            Thrown when the <see cref="T:Ragnarok.IO.Compression.GrfArchive"/> is read-only.
+            </exception>
+        </member>
+        <member name="P:Ragnarok.IO.Compression.GrfItemCollection.Item(System.String)">
+            <summary>
+            Gets a <see cref="T:Ragnarok.IO.Compression.GrfItem"/> by name.
+            </summary>
+            <param name="name">The name of the <see cref="T:Ragnarok.IO.Compression.GrfItem"/>.</param>
+            <returns>A <see cref="T:Ragnarok.IO.Compression.GrfItem"/>.</returns>
+            <exception cref="T:System.IndexOutOfRangeException">
+            Thrown when the filename is not found within the <see cref="T:Ragnarok.IO.Compression.GrfArchive"/>.
+            </exception>
+            <exception cref="T:System.ObjectDisposedException">
+            Thrown when the <see cref="T:Ragnarok.IO.Compression.GrfArchive"/> is closed.
+            </exception>
+        </member>
+        <member name="P:Ragnarok.IO.Compression.GrfItemCollection.Item(System.Int32)">
+            <summary>
+            Gets a <see cref="T:Ragnarok.IO.Compression.GrfItem"/> by index.
+            </summary>
+            <param name="index">The index of the <see cref="T:Ragnarok.IO.Compression.GrfItem"/>.</param>
+            <returns>A <see cref="T:Ragnarok.IO.Compression.GrfItem"/>.</returns>
+            <exception cref="T:System.IndexOutOfRangeException">
+            Thrown when the filename is not found within the <see cref="T:Ragnarok.IO.Compression.GrfArchive"/>.
+            </exception>
+            <exception cref="T:System.ObjectDisposedException">
+            Thrown when the <see cref="T:Ragnarok.IO.Compression.GrfArchive"/> is closed.
+            </exception>
+        </member>
+        <member name="P:Ragnarok.IO.Compression.GrfItemCollection.Count">
+            <summary>
+            The total count of <see cref="T:Ragnarok.IO.Compression.GrfItem"/> entries in the <see cref="T:Ragnarok.IO.Compression.GrfArchive"/>.
+            </summary>
+            <exception cref="T:System.ObjectDisposedException">
+            Thrown when the <see cref="T:Ragnarok.IO.Compression.GrfArchive"/> is closed.
+            </exception>
+        </member>
+        <member name="P:Ragnarok.IO.Compression.GrfItemCollection.IsReadOnly">
+            <summary>
+            Wether or not this collection can be modified.
+            </summary>
+            <exception cref="T:System.ObjectDisposedException">
+            Thrown when the <see cref="T:Ragnarok.IO.Compression.GrfArchive"/> is closed.
+            </exception>
+        </member>
+        <member name="P:Ragnarok.IO.Compression.GrfItemCollection.Capacity">
+            <summary>
+            Gets or sets the total number of <see cref="T:Ragnarok.IO.Compression.GrfItem"/> objects
+            the collection can hold without resizing.
+            </summary>
+            <exception cref="T:System.ObjectDisposedException">
+            Thrown when the <see cref="T:Ragnarok.IO.Compression.GrfArchive"/> is closed.
+            </exception>
+        </member>
+        <member name="T:Ragnarok.IO.Compression.GrfDirectoryInfo">
+            <summary>
+            A directory entry in a <see cref="T:Ragnarok.IO.Compression.GrfArchive"/>.
+            </summary>
+        </member>
+        <member name="M:Ragnarok.IO.Compression.GrfDirectoryInfo.ExtractTo(System.String)">
+            <summary>
+            Extracts the directory to a specific location.
+            </summary>
+            <param name="path">The location where to extract this directory to.</param>
+        </member>
+        <member name="T:Ragnarok.IO.Compression.GrfException">
+            <summary>
+            Represents the error that can occur while handling the <see cref="T:Ragnarok.IO.Compression.GrfArchive"/> class.
+            </summary>
+        </member>
+        <member name="T:Ragnarok.IO.Compression.Cryptography.GrfCrypt">
+            <summary>
+            The base cryptography class for Ragnarok Online grf files.
+            </summary>
+        </member>
+        <member name="M:Ragnarok.IO.Compression.Cryptography.GrfCrypt.DES_S(System.Int32)">
+            <summary>
+            Selection functions (S)
+            </summary>
+            <param name="num"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Ragnarok.IO.Compression.Cryptography.GrfCrypt.DecryptNameVer1(System.Byte[],System.Int32)">
+            <summary>
+            Decrypts a filename in a <see cref="T:Ragnarok.IO.Compression.GrfArchive"/> that has a version major of 1.
+            </summary>
+            <param name="buffer">The input buffer of the filename.</param>
+            <param name="len">The length of the filename.</param>
+            <returns>A <see cref="T:System.String"/> with the decrypted filename.</returns>
+        </member>
+        <member name="M:Ragnarok.IO.Compression.Cryptography.GrfCrypt.EncryptNameVer1(System.String,System.Int32)">
+            <summary>
+            Encrypts a filename in a <see cref="T:Ragnarok.IO.Compression.GrfArchive"/> that has a version major of 1.
+            </summary>
+            <param name="name">The name to encrypt.</param>
+            <param name="len">The length of the name.</param>
+            <returns>A <see cref="T:System.Byte"/> array containing the encrypted filename.</returns>
+        </member>
+        <member name="M:Ragnarok.IO.Compression.Cryptography.GrfCrypt.DecryptFileBuffer(System.Byte[],System.Int32,Ragnarok.IO.Compression.GrfFileFlags)">
+            <summary>
+            Decrypts the contents of a file inside the <see cref="T:Ragnarok.IO.Compression.GrfArchive"/>.
+            </summary>
+            <param name="buffer">The encrypted contents.</param>
+            <param name="len">The length of the contents.
+            (Note: this is the CompressedLength, not the AlignedCompressedLength)</param>
+            <param name="flags">The <see cref="T:Ragnarok.IO.Compression.GrfFileFlags"/> of the file.</param>
+            <returns>A <see cref="T:System.Byte"/> array containing the decrypted contents of the file.</returns>
+        </member>
+        <member name="M:Ragnarok.IO.Compression.Cryptography.GrfCrypt.EncryptFileBuffer(System.Byte[],System.Int32,Ragnarok.IO.Compression.GrfFileFlags)">
+            <summary>
+            Encrypts the contents of a file inside the <see cref="T:Ragnarok.IO.Compression.GrfArchive"/>.
+            </summary>
+            <param name="buffer">The unencrypted contents.</param>
+            <param name="len">The length of the contents.
+            (Note: this is the AlignedCompressedLength, not the CompressedLength)</param>
+            <param name="flags">The <see cref="T:Ragnarok.IO.Compression.GrfFileFlags"/> of the file.</param>
+            <returns>A <see cref="T:System.Byte"/> array containing the encrypted contents of the file.</returns>
+        </member>
+        <member name="P:Ragnarok.IO.Compression.Cryptography.GrfCrypt.DES_IP">
+            <summary>
+            Initial Permutation (IP)
+            </summary>
+        </member>
+        <member name="P:Ragnarok.IO.Compression.Cryptography.GrfCrypt.DES_IP_INV">
+            <summary>
+            Final Permutatioin (IP^-1)
+            </summary>
+        </member>
+        <member name="P:Ragnarok.IO.Compression.Cryptography.GrfCrypt.DES_PC2">
+            <summary>
+            Permuted-choice 2 (PC-2)
+            </summary>
+        </member>
+        <member name="P:Ragnarok.IO.Compression.Cryptography.GrfCrypt.DES_E">
+            <summary>
+            Bit-selection (E)
+            </summary>
+        </member>
+        <member name="P:Ragnarok.IO.Compression.Cryptography.GrfCrypt.DES_P">
+            <summary>
+            (P)
+            </summary>
+        </member>
+        <member name="P:Ragnarok.IO.Compression.Cryptography.GrfCrypt.DES_PC1_1">
+            <summary>
+            Permuted-choice 1 (PC-1) part 1
+            </summary>
+        </member>
+        <member name="P:Ragnarok.IO.Compression.Cryptography.GrfCrypt.DES_PC1_2">
+            <summary>
+            Permuted-choice 1 (PC-1) part 2
+            </summary>
+        </member>
+        <member name="P:Ragnarok.IO.Compression.Cryptography.GrfCrypt.DES_LSHIFTS">
+            <summary>
+            Left shifts per iteration
+            </summary>
+        </member>
+        <member name="P:Ragnarok.IO.Compression.Cryptography.GrfCrypt.KeySchedule">
+            <summary>
+            The keyschedule used for the DES implementation. The default is an array filled with 0x80 0 bytes.
+            </summary>
+        </member>
+        <member name="T:Ragnarok.IO.Compression.GrfArchive">
+            <summary>
+            A class for interacting with Ragnarok Online grf files.
+            </summary>
+        </member>
+        <member name="M:Ragnarok.IO.Compression.GrfArchive.#ctor(System.String)">
+            <summary>
+            Creates a new <see cref="T:Ragnarok.IO.Compression.GrfArchive"/> with the default version.
+            </summary>
+            <param name="filename">The path and filename were to create the new <see cref="T:Ragnarok.IO.Compression.GrfArchive"/>.</param>
+        </member>
+        <member name="M:Ragnarok.IO.Compression.GrfArchive.#ctor(System.String,System.Version)">
+            <summary>
+            Creates a new <see cref="T:Ragnarok.IO.Compression.GrfArchive"/> with a specific version.
+            </summary>
+            <param name="filename">The path and filename were to create the new <see cref="T:Ragnarok.IO.Compression.GrfArchive"/>.</param>
+            <param name="version">The version of the <see cref="T:Ragnarok.IO.Compression.GrfArchive"/>.</param>
+        </member>
+        <member name="M:Ragnarok.IO.Compression.GrfArchive.Merge(Ragnarok.IO.Compression.GrfArchive)">
+            <summary>
+            Merges another <see cref="T:Ragnarok.IO.Compression.GrfArchive"/> with this <see cref="T:Ragnarok.IO.Compression.GrfArchive"/>.
+            </summary>
+            <param name="grf">The <see cref="T:Ragnarok.IO.Compression.GrfArchive"/> to add the current one.</param>
+            <exception cref="T:System.ObjectDisposedException">
+            Thrown when the <see cref="T:Ragnarok.IO.Compression.GrfArchive"/> is closed.
+            </exception>
+        </member>
+        <member name="M:Ragnarok.IO.Compression.GrfArchive.ExtractTo(System.String)">
+            <summary>
+            Extracts the contents of the <see cref="T:Ragnarok.IO.Compression.GrfArchive"/> to a 
+            specified location.
+            </summary>
+            <param name="path">The path where to extract the files to.</param>
+            <exception cref="T:System.ObjectDisposedException">
+            Thrown when the <see cref="T:Ragnarok.IO.Compression.GrfArchive"/> is closed.
+            </exception>
+        </member>
+        <member name="M:Ragnarok.IO.Compression.GrfArchive.Flush">
+            <summary>
+            Writes all unwritten data to the disk.
+            </summary>
+        </member>
+        <member name="M:Ragnarok.IO.Compression.GrfArchive.Repack">
+            <summary>
+            Repacks all data and releases all data.
+            </summary>
+            <exception cref="T:System.ObjectDisposedException">
+            Thrown when the <see cref="T:Ragnarok.IO.Compression.GrfArchive"/> is closed.
+            </exception>
+        </member>
+        <member name="M:Ragnarok.IO.Compression.GrfArchive.Close">
+            <summary>
+            Writes all unwritten data to the disk and releases all data.
+            </summary>
+        </member>
+        <member name="M:Ragnarok.IO.Compression.GrfArchive.Dispose">
+            <summary>
+            Writes all unwritten data to the disk and releases all data.
+            </summary>
+        </member>
+        <member name="M:Ragnarok.IO.Compression.GrfArchive.Open(System.String,System.Boolean)">
+            <summary>
+            Opens an existing <see cref="T:Ragnarok.IO.Compression.GrfArchive"/>.
+            </summary>
+            <param name="filename">The path to the <see cref="T:Ragnarok.IO.Compression.GrfArchive"/>.</param>
+            <param name="isreadonly">Wether or not to open the file as read only.</param>
+            <returns></returns>
+        </member>
+        <member name="P:Ragnarok.IO.Compression.GrfArchive.IsReadOnly">
+            <summary>
+            Wether or not the <see cref="T:Ragnarok.IO.Compression.GrfArchive"/> is read only.
+            </summary>
+            <exception cref="T:System.ObjectDisposedException">
+            Thrown when the <see cref="T:Ragnarok.IO.Compression.GrfArchive"/> is closed.
+            </exception>
+        </member>
+        <member name="P:Ragnarok.IO.Compression.GrfArchive.Version">
+            <summary>
+            The version of the <see cref="T:Ragnarok.IO.Compression.GrfArchive"/>.
+            </summary>
+            <exception cref="T:System.ObjectDisposedException">
+            Thrown when the <see cref="T:Ragnarok.IO.Compression.GrfArchive"/> is closed.
+            </exception>
+        </member>
+        <member name="P:Ragnarok.IO.Compression.GrfArchive.Items">
+            <summary>
+            A <see cref="T:Ragnarok.IO.Compression.GrfItemCollection"/> with the items of the <see cref="T:Ragnarok.IO.Compression.GrfArchive"/>.
+            </summary>
+            <exception cref="T:System.ObjectDisposedException">
+            Thrown when the <see cref="T:Ragnarok.IO.Compression.GrfArchive"/> is closed.
+            </exception>
+        </member>
+        <member name="P:Ragnarok.IO.Compression.GrfArchive.UnusedSpace">
+            <summary>
+            The amount of allocated but unused space in the <see cref="T:Ragnarok.IO.Compression.GrfArchive"/>.
+            </summary>
+            <exception cref="T:System.ObjectDisposedException">
+            Thrown when the <see cref="T:Ragnarok.IO.Compression.GrfArchive"/> is closed.
+            </exception>
+        </member>
+    </members>
+</doc>
