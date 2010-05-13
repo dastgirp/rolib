@@ -290,17 +290,6 @@ namespace Ragnarok.IO.Compression.Cryptography
                 GRFMixedProcess(pNamebuf, pBuffer, len, 1, KeySchedule, CryptoType.Decrypt);
                 return pNamebuf;
             }
-
-#if UNUSED
-            byte namebuf = new byte[len];
-            GCHandle hBuffer = GCHandle.Alloc(buffer, GCHandleType.Pinned);
-            GCHandle hNameBuf = GCHandle.Alloc(namebuf, GCHandleType.Pinned);
-            GRFMixedProcess(hNameBuf.AddrOfPinnedObject(), hBuffer.AddrOfPinnedObject(), len, 1, KeySchedule, CryptoType.Decrypt);
-            hBuffer.Free();
-            string ret = Marshal.PtrToStringAnsi(hNameBuf.AddrOfPinnedObject());
-            hNameBuf.Free();
-            return ret;
-#endif
         }
         /// <summary>
         /// Encrypts a filename in a <see cref="GrfArchive"/> that has a version major of 1.
@@ -315,16 +304,8 @@ namespace Ragnarok.IO.Compression.Cryptography
                             pNamebuf = new IntPtrEx(namebuf))
             {
                 GRFMixedProcess(pNamebuf, pName, len, 1, KeySchedule, CryptoType.Encrypt);
+                return namebuf;
             }
-
-#if UNUSED
-            IntPtr pName = Marshal.StringToHGlobalAnsi(name);
-            GCHandle hNameBuf = GCHandle.Alloc(namebuf, GCHandleType.Pinned);
-            GRFMixedProcess(hNameBuf.AddrOfPinnedObject(), pName, len, 1, KeySchedule, CryptoType.Encrypt);
-            Marshal.FreeHGlobal(pName);
-            hNameBuf.Free();
-#endif
-            return namebuf;
         }
         /// <summary>
         /// Decrypts the contents of a file inside the <see cref="GrfArchive"/>.
@@ -340,16 +321,9 @@ namespace Ragnarok.IO.Compression.Cryptography
             using (IntPtrEx pDst = new IntPtrEx(dst),
                             pBuffer = new IntPtrEx(buffer))
             {
-                GRFProcess(pDst, pBuffer, buffer.Length, (byte)flags, len, m_KeySchedule, CryptoType.Decrypt);    
+                GRFProcess(pDst, pBuffer, buffer.Length, (byte)flags, len, m_KeySchedule, CryptoType.Decrypt);
+                return dst;
             }
-#if UNUSED
-            GCHandle hDst = GCHandle.Alloc(dst, GCHandleType.Pinned);
-            GCHandle hBuffer = GCHandle.Alloc(buffer, GCHandleType.Pinned);
-            GRFProcess(hDst.AddrOfPinnedObject(), hBuffer.AddrOfPinnedObject(), buffer.Length, (byte)flags, len, m_KeySchedule, CryptoType.Decrypt);
-            hDst.Free();
-            hBuffer.Free();
-#endif
-            return dst;
         }
         /// <summary>
         /// Encrypts the contents of a file inside the <see cref="GrfArchive"/>.
@@ -366,15 +340,8 @@ namespace Ragnarok.IO.Compression.Cryptography
                             pBuffer = new IntPtrEx(buffer))
             {
                 GRFProcess(pDst, pBuffer, buffer.Length, (byte)flags, len, m_KeySchedule, CryptoType.Encrypt);
+                return dst;
             }
-#if UNUSED
-            GCHandle hDst = GCHandle.Alloc(dst, GCHandleType.Pinned);
-            GCHandle hBuffer = GCHandle.Alloc(buffer, GCHandleType.Pinned);
-            GRFProcess(hDst.AddrOfPinnedObject(), hBuffer.AddrOfPinnedObject(), buffer.Length, (byte)flags, len, m_KeySchedule, CryptoType.Encrypt);
-            hDst.Free();
-            hBuffer.Free();
-#endif
-            return dst;
         }
 
         #endregion

@@ -239,16 +239,6 @@ namespace Ragnarok.IO.Compression
             {
                 return SwapNibbles(pBuffer, src, len).Read<string>();
             }
-
-#if UNUSED
-            byte[] buffer = new byte[len];
-            IntPtrEx pBuffer = new IntPtrEx(buffer);
-            SwapNibbles(pBuffer, src, len)
-            dst = pBuffer.Read<string>();
-            pBuffer.Free();
-
-            return dst;
-#endif
         }
 
         private static byte[] SwapNibbles(byte[] dst, IntPtrEx src, int len)
@@ -265,14 +255,6 @@ namespace Ragnarok.IO.Compression
             {
                 return SwapNibbles(dst, pSrc, len);
             }
-
-#if UNUSED
-            IntPtrEx pSrc = src;
-            IntPtr ret = SwapNibbles(dst, pSrc, len);
-            pSrc.Free();
-
-            return ret;
-#endif
         }
 
         private static IntPtrEx SwapNibbles(IntPtrEx dst, byte[] src, int len)
@@ -350,21 +332,6 @@ namespace Ragnarok.IO.Compression
                 FileStream.Seek(EndianConverter.LittleEndian(pBuffer.Read<int>(GRF_HEADER_MID_LEN) + GRF_HEADER_FULL_LEN), SeekOrigin.Begin);
             }
 
-#if UNUSED
-            IntPtrEx pBuffer = new IntPtrEx(buf);
-
-            m_Items = new GrfItemCollection(this);
-
-            m_IntVersion = EndianConverter.LittleEndian(pBuffer.Read<int>(GRF_HEADER_MID_LEN + 0xC));
-            m_Items.Capacity = EndianConverter.LittleEndian(pBuffer.Read<int>(GRF_HEADER_MID_LEN + 8))
-                - EndianConverter.LittleEndian(pBuffer.Read<int>(GRF_HEADER_MID_LEN + 4))
-                - 7;
-
-            FileStream.Seek(EndianConverter.LittleEndian(pBuffer.Read<int>(GRF_HEADER_MID_LEN) + GRF_HEADER_FULL_LEN), SeekOrigin.Begin);
-
-            pBuffer.Free();
-#endif
-
             switch (m_IntVersion & 0xFF00)
             {
                 case 0x0200: ReadVer2Info(); break;
@@ -440,67 +407,6 @@ namespace Ragnarok.IO.Compression
             {
                 throw new Exception(ex.Message);
             }
-#if UNUSED
-            try
-            {
-                FileStream.Read(buffer, 0, len);
-
-                string name = null;
-                GrfItem item;
-
-                for (int i = offset = 0; i < m_Items.Capacity; i++)
-                {
-                    len = EndianConverter.LittleEndian(pBuffer.Read<int>(offset));
-                    offset += 4;
-
-                    if (m_IntVersion < 0x101)
-                    {
-                        len2 = pBuffer.Read<string>(offset).Length;
-                        if (len2 >= GRF_NAMELEN)
-                            throw new GrfException();
-
-                        name = SwapNibbles(pBuffer + offset, len2);
-                    }
-                    else if (m_IntVersion < 0x104)
-                    {
-                        offset += 2;
-                        len2 = len - 6;
-                        if (len2 >= GRF_NAMELEN)
-                            throw new GrfException();
-
-                        SwapNibbles(namebuf, pBuffer + offset, len2);
-                        name = GrfCrypt.DecryptNameVer1(namebuf, len2);
-
-                        len -= 2;
-                    }
-
-                    offset += len;
-
-                    item = GrfItem.CreateV1
-                    (
-                        this,
-                        name,
-                        EndianConverter.LittleEndian(pBuffer.Read<int>(offset)) - EndianConverter.LittleEndian(pBuffer.Read<int>(offset + 8)) - 0x02CB,
-                        EndianConverter.LittleEndian(pBuffer.Read<int>(offset + 4)) - 0x92CB,
-                        EndianConverter.LittleEndian(pBuffer.Read<int>(offset + 8)),
-                        (GrfFileFlags)pBuffer[offset + 0xC],
-                        EndianConverter.LittleEndian(pBuffer.Read<int>(offset + 0xD)) + GRF_HEADER_FULL_LEN
-                    );
-
-                    m_Items.GrfAdd(item);
-
-                    offset += 0x11;
-                }
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
-            finally
-            {
-                pBuffer.Free();
-            }
-#endif
         }
 
         private void ReadVer2Info()
@@ -556,53 +462,6 @@ namespace Ragnarok.IO.Compression
                     throw new Exception(ex.Message);
                 }
             }
-
-#if UNUSED
-
-            buf = ZlibStream.UncompressBuffer(zbuf);
-            IntPtrEx pBuffer = new IntPtrEx(buf);
-
-            string name = null;
-            GrfItem item;
-
-            try
-            {
-                for (int i = 0, offset = 0; i < m_Items.Capacity; i++)
-                {
-                    name = pBuffer.Read<string>(offset);
-
-                    len = name.Length + 1;
-
-                    if (len >= GRF_NAMELEN)
-                        throw new GrfException();
-
-                    offset += len;
-
-                    item = GrfItem.CreateV2
-                    (
-                        this,
-                        name,
-                        EndianConverter.LittleEndian(pBuffer.Read<int>(offset)),
-                        EndianConverter.LittleEndian(pBuffer.Read<int>(offset + 4)),
-                        EndianConverter.LittleEndian(pBuffer.Read<int>(offset + 8)),
-                        (GrfFileFlags)pBuffer[offset + 0xC],
-                        EndianConverter.LittleEndian(pBuffer.Read<int>(offset + 0xD)) + GRF_HEADER_FULL_LEN
-                    );
-
-                    m_Items.GrfAdd(item);
-
-                    offset += 0x11;
-                }
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
-            finally
-            {
-                pBuffer.Free();
-            }
-#endif
         }
 
         private void FlushFile(int i)
@@ -641,7 +500,6 @@ namespace Ragnarok.IO.Compression
         private void FlushVer1()
         {
             byte[] buffer = new byte[m_Items.Count * GRF_ITEM_SIZE];
-            IntPtrEx pBuffer = new IntPtrEx(buffer);
             int i, offset, len, writeOffset;
             GrfFileInfo gfile = null;
 
@@ -649,75 +507,74 @@ namespace Ragnarok.IO.Compression
             {
                 m_Items.SortToPosition();
 
-                for (i = offset = 0; i < Items.Count; i++)
+                using (IntPtrEx pBuffer = new IntPtrEx(buffer))
                 {
-                    if (m_Items[i] is GrfFileInfo)
+                    for (i = offset = 0; i < Items.Count; i++)
                     {
-                        gfile = (GrfFileInfo)m_Items[i];
-
-                        if (m_ForceRepack)
+                        if (m_Items[i] is GrfFileInfo)
                         {
-                            gfile.CompressedLength = 0;
-                            gfile.AlignedCompressedLength = 0;
-                            gfile.Position = 0;
+                            gfile = (GrfFileInfo)m_Items[i];
+
+                            if (m_ForceRepack)
+                            {
+                                gfile.CompressedLength = 0;
+                                gfile.AlignedCompressedLength = 0;
+                                gfile.Position = 0;
+                            }
+
+                            if (gfile.CompressedLength == 0 &&
+                                gfile.AlignedCompressedLength == 0 &&
+                                gfile.Position == 0 &&
+                                gfile.Length != 0)
+                            {
+                                if (gfile.CheckExtension())
+                                    gfile.Flags = (gfile.Flags & ~GrfFileFlags.MixCrypt) | GrfFileFlags.Des_0x14;
+                                else
+                                    gfile.Flags = (gfile.Flags & ~GrfFileFlags.Des_0x14) | GrfFileFlags.MixCrypt;
+
+                                FlushFile(i);
+                            }
                         }
 
-                        if (gfile.CompressedLength == 0 &&
-                            gfile.AlignedCompressedLength == 0 &&
-                            gfile.Position == 0 &&
-                            gfile.Length != 0)
+                        len = m_Items[i].FullName.Length + 1;
+                        if (m_IntVersion < 0x101)
                         {
-                            if (gfile.CheckExtension())
-                                gfile.Flags = (gfile.Flags & ~GrfFileFlags.MixCrypt) | GrfFileFlags.Des_0x14;
-                            else
-                                gfile.Flags = (gfile.Flags & ~GrfFileFlags.Des_0x14) | GrfFileFlags.MixCrypt;
-
-                            FlushFile(i);
+                            pBuffer.Write<int>(offset, len);
+                            SwapNibbles(pBuffer + offset + 4, m_Items[i].FullName, len);
+                            offset += 4 + len;
                         }
-                    }
+                        else if (m_IntVersion < 0x104)
+                        {
+                            pBuffer.Write<int>(offset, len + 6);
+                            offset += 4;
+                            SwapNibbles(pBuffer + offset + 6, GrfCrypt.EncryptNameVer1(m_Items[i].Name, len), len);
+                            offset += len + 6;
+                        }
 
-                    len = m_Items[i].FullName.Length + 1;
-                    if (m_IntVersion < 0x101)
-                    {
-                        pBuffer.Write<int>(offset, len);
-                        SwapNibbles(pBuffer + offset + 4, m_Items[i].FullName, len);
-                        offset += 4 + len;
-                    }
-                    else if (m_IntVersion < 0x104)
-                    {
-                        pBuffer.Write<int>(offset, len + 6);
-                        offset += 4;
-                        SwapNibbles(pBuffer + offset + 6, GrfCrypt.EncryptNameVer1(m_Items[i].Name, len), len);
-                        offset += len + 6;
-                    }
+                        if (m_Items[i] is GrfDirectoryInfo)
+                        {
+                            pBuffer.Write<int>(offset, EndianConverter.LittleEndian(GrfItem.GRFFILE_DIR_SZSMALL + GrfItem.GRFFILE_DIR_SZORIG + 0x02CB));
+                            pBuffer.Write<int>(offset + 4, EndianConverter.LittleEndian(GrfItem.GRFFILE_DIR_SZFILE + 0x92CB));
+                            pBuffer.Write<int>(offset + 8, EndianConverter.LittleEndian(GrfItem.GRFFILE_DIR_SZORIG));
+                            pBuffer.Write<int>(offset + 0xD, EndianConverter.LittleEndian(GrfItem.GRFFILE_DIR_OFFSET - GRF_HEADER_FULL_LEN));
+                        }
+                        else
+                        {
+                            pBuffer.Write<int>(offset, EndianConverter.LittleEndian(gfile.CompressedLength + gfile.Length + 0x02CB));
+                            pBuffer.Write<int>(offset + 4, EndianConverter.LittleEndian(gfile.AlignedCompressedLength + 0x92CB));
+                            pBuffer.Write<int>(offset + 8, EndianConverter.LittleEndian(gfile.Length));
+                            pBuffer.Write<int>(offset + 0xD, EndianConverter.LittleEndian(gfile.Position - GRF_HEADER_FULL_LEN));
+                        }
 
-                    if (m_Items[i] is GrfDirectoryInfo)
-                    {
-                        pBuffer.Write<int>(offset, EndianConverter.LittleEndian(GrfItem.GRFFILE_DIR_SZSMALL + GrfItem.GRFFILE_DIR_SZORIG + 0x02CB));
-                        pBuffer.Write<int>(offset + 4, EndianConverter.LittleEndian(GrfItem.GRFFILE_DIR_SZFILE + 0x92CB));
-                        pBuffer.Write<int>(offset + 8, EndianConverter.LittleEndian(GrfItem.GRFFILE_DIR_SZORIG));
-                        pBuffer.Write<int>(offset + 0xD, EndianConverter.LittleEndian(GrfItem.GRFFILE_DIR_OFFSET - GRF_HEADER_FULL_LEN));
-                    }
-                    else
-                    {
-                        pBuffer.Write<int>(offset, EndianConverter.LittleEndian(gfile.CompressedLength + gfile.Length + 0x02CB));
-                        pBuffer.Write<int>(offset + 4, EndianConverter.LittleEndian(gfile.AlignedCompressedLength + 0x92CB));
-                        pBuffer.Write<int>(offset + 8, EndianConverter.LittleEndian(gfile.Length));
-                        pBuffer.Write<int>(offset + 0xD, EndianConverter.LittleEndian(gfile.Position - GRF_HEADER_FULL_LEN));
-                    }
+                        pBuffer.Write<byte>(offset + 0xC, (byte)(m_Items[i].Flags & GrfFileFlags.File));
 
-                    pBuffer[offset + 0xC] = (byte)(m_Items[i].Flags & GrfFileFlags.File);
-
-                    offset += 0x11;
+                        offset += 0x11;
+                    }
                 }
             }
             catch (Exception ex)
             {
                 throw new Exception(ex.Message);
-            }
-            finally
-            {
-                pBuffer.Free();
             }
 
             FileStream.Seek(0, SeekOrigin.End);
@@ -733,7 +590,7 @@ namespace Ragnarok.IO.Compression
         private void FlushVer2()
         {
             byte[] buffer = new byte[m_Items.Count * GRF_ITEM_SIZE];
-            IntPtrEx pName, pBuffer = new IntPtrEx(buffer);
+            IntPtrEx pName;
             int i, offset, len;
             GrfFileInfo gfile = null;
 
@@ -741,67 +598,62 @@ namespace Ragnarok.IO.Compression
             {
                 m_Items.SortToPosition();
 
-                for (i = offset = 0; i < Items.Count; i++)
+                using (IntPtrEx pBuffer = new IntPtrEx(buffer))
                 {
-                    len = m_Items[i].FullName.Length + 1;
-                    using (pName = new IntPtrEx(m_Items[i].FullName))
+                    for (i = offset = 0; i < Items.Count; i++)
                     {
-                        Marshal.Copy(pName, buffer, offset, len);
-                    }
-#if UNUSED
-                    Marshal.Copy((pName = new IntPtrEx(m_Items[i].FullName)), buffer, offset, len);
-                    pName.Free();
-#endif
-
-                    offset += len;
-
-                    if (m_Items[i] is GrfFileInfo)
-                    {
-                        gfile = (GrfFileInfo)m_Items[i];
-
-                        if (m_ForceRepack)
+                        len = m_Items[i].FullName.Length + 1;
+                        using (pName = new IntPtrEx(m_Items[i].FullName))
                         {
-                            gfile.CompressedLength = 0;
-                            gfile.AlignedCompressedLength = 0;
-                            gfile.Position = 0;
+                            Marshal.Copy(pName, buffer, offset, len);
                         }
 
-                        if (gfile.CompressedLength == 0 &&
-                            gfile.AlignedCompressedLength == 0 &&
-                            gfile.Position == 0 &&
-                            gfile.Length != 0)
-                        {
-                            if (!m_AllowCrypt)
-                                gfile.Flags &= ~(GrfFileFlags.MixCrypt | GrfFileFlags.Des_0x14);
+                        offset += len;
 
-                            FlushFile(i);
+                        if (m_Items[i] is GrfFileInfo)
+                        {
+                            gfile = (GrfFileInfo)m_Items[i];
+
+                            if (m_ForceRepack)
+                            {
+                                gfile.CompressedLength = 0;
+                                gfile.AlignedCompressedLength = 0;
+                                gfile.Position = 0;
+                            }
+
+                            if (gfile.CompressedLength == 0 &&
+                                gfile.AlignedCompressedLength == 0 &&
+                                gfile.Position == 0 &&
+                                gfile.Length != 0)
+                            {
+                                if (!m_AllowCrypt)
+                                    gfile.Flags &= ~(GrfFileFlags.MixCrypt | GrfFileFlags.Des_0x14);
+
+                                FlushFile(i);
+                            }
+
+                            pBuffer.Write<int>(offset, EndianConverter.LittleEndian(gfile.CompressedLength));
+                            pBuffer.Write<int>(offset + 4, EndianConverter.LittleEndian(gfile.AlignedCompressedLength));
+                            pBuffer.Write<int>(offset + 8, EndianConverter.LittleEndian(gfile.Length));
+                            pBuffer.Write<int>(offset + 0xD, EndianConverter.LittleEndian(gfile.Position - GRF_HEADER_FULL_LEN));
+                        }
+                        else
+                        {
+                            pBuffer.Write<int>(offset, EndianConverter.LittleEndian(GrfItem.GRFFILE_DIR_SZSMALL));
+                            pBuffer.Write<int>(offset + 4, EndianConverter.LittleEndian(GrfItem.GRFFILE_DIR_SZFILE));
+                            pBuffer.Write<int>(offset + 8, EndianConverter.LittleEndian(GrfItem.GRFFILE_DIR_SZORIG));
+                            pBuffer.Write<int>(offset + 0xD, EndianConverter.LittleEndian(GrfItem.GRFFILE_DIR_OFFSET - GRF_HEADER_FULL_LEN));
                         }
 
-                        pBuffer.Write<int>(offset, EndianConverter.LittleEndian(gfile.CompressedLength));
-                        pBuffer.Write<int>(offset + 4, EndianConverter.LittleEndian(gfile.AlignedCompressedLength));
-                        pBuffer.Write<int>(offset + 8, EndianConverter.LittleEndian(gfile.Length));
-                        pBuffer.Write<int>(offset + 0xD, EndianConverter.LittleEndian(gfile.Position - GRF_HEADER_FULL_LEN));
-                    }
-                    else
-                    {
-                        pBuffer.Write<int>(offset, EndianConverter.LittleEndian(GrfItem.GRFFILE_DIR_SZSMALL));
-                        pBuffer.Write<int>(offset + 4, EndianConverter.LittleEndian(GrfItem.GRFFILE_DIR_SZFILE));
-                        pBuffer.Write<int>(offset + 8, EndianConverter.LittleEndian(GrfItem.GRFFILE_DIR_SZORIG));
-                        pBuffer.Write<int>(offset + 0xD, EndianConverter.LittleEndian(GrfItem.GRFFILE_DIR_OFFSET - GRF_HEADER_FULL_LEN));
-                    }
+                        pBuffer.Write<byte>(offset + 0xC, (byte)m_Items[i].Flags);
 
-                    pBuffer[offset + 0xC] = (byte)m_Items[i].Flags;
-
-                    offset += 0x11;
+                        offset += 0x11;
+                    }
                 }
             }
             catch (Exception ex)
             {
                 throw new Exception(ex.Message);
-            }
-            finally
-            {
-                pBuffer.Free();
             }
 
             Array.Resize<byte>(ref buffer, offset);

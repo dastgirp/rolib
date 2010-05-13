@@ -1,5 +1,0 @@
-C:\Documents and Settings\Poring Assassin\My Documents\Visual Studio 2008\Projects\Ragnarok\Ragnarok.Common\bin\Debug\Ragnarok.dll
-C:\Documents and Settings\Poring Assassin\My Documents\Visual Studio 2008\Projects\Ragnarok\Ragnarok.Common\bin\Debug\Ragnarok.pdb
-C:\Documents and Settings\Poring Assassin\My Documents\Visual Studio 2008\Projects\Ragnarok\Ragnarok.Common\obj\Debug\ResolveAssemblyReference.cache
-C:\Documents and Settings\Poring Assassin\My Documents\Visual Studio 2008\Projects\Ragnarok\Ragnarok.Common\obj\Debug\Ragnarok.dll
-C:\Documents and Settings\Poring Assassin\My Documents\Visual Studio 2008\Projects\Ragnarok\Ragnarok.Common\obj\Debug\Ragnarok.pdb
