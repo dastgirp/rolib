@@ -419,6 +419,15 @@ namespace Ragnarok.IO.Compression
             return m_Items.Contains(item);
         }
         /// <summary>
+        /// Determines wether a path exits within the <see cref="GrfArchive"/>.
+        /// </summary>
+        /// <param name="name">The path for the item.</param>
+        /// <returns>A <see cref="Boolean"/> indicating wether or not an item exits in the <see cref="GrfArchive"/>.</returns>
+        public bool Contains(string name)
+        {
+            return IndexOf(name) >= 0;
+        }
+        /// <summary>
         /// Copies all <see cref="GrfItem"/> entries to an array.
         /// </summary>
         /// <param name="array">The array to copy to.</param>

@@ -12,6 +12,11 @@ namespace Ragnarok.IO.Compression
         private byte[] m_Data;
         #region Properties
 
+        public string Extension
+        {
+            get { return m_Name.Substring(m_Name.LastIndexOf('.') + 1); }
+        }
+
         /// <summary>
         /// The size on the the file on the disk.
         /// </summary>
@@ -61,9 +66,10 @@ namespace Ragnarok.IO.Compression
                 m_Grf.FileStream.Seek(Position, SeekOrigin.Begin);
                 m_Grf.FileStream.Read(buf, 0, buf.Length);
 
-                byte[] zbuf = GrfCrypt.DecryptFileBuffer(buf, CompressedLength, Flags);
+                //byte[] zbuf = GrfCrypt.DecryptFileBuffer(buf, CompressedLength, Flags);
 
-                Data = ZlibStream.UncompressBuffer(zbuf);
+                //Data = ZlibStream.UncompressBuffer(zbuf);
+                Data = buf;
 
                 return m_Data;
             }
@@ -88,7 +94,7 @@ namespace Ragnarok.IO.Compression
         {
             m_Grf = grf;
             m_Flags = flags;
-            m_Name = EncodeName(name);
+            m_Name = FilenameEncoding.Encode(name);
             m_Hash = NameHash(m_Name);
             Data = data;
         }

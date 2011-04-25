@@ -38,7 +38,7 @@ namespace Ragnarok.IO.Compression
                 long ret = m_BaseStream.Position - m_Start;
 
                 if (ret < 0 || ret > m_Length)
-                    throw new ArgumentOutOfRangeException();
+                    return 0;
 
                 return ret;
             }
@@ -71,7 +71,7 @@ namespace Ragnarok.IO.Compression
             try
             {
                 if (Position + offset + count > m_Length)
-                    count = m_Length - (Position + offset);
+                    count = (int)(m_Length - (Position + offset));
 
                 ret = m_BaseStream.Read(buffer, offset, count);
             }
@@ -91,7 +91,13 @@ namespace Ragnarok.IO.Compression
                     offset = (m_Start + offset > m_Length) ? m_Length : m_Start + offset;
                     break;
                 case SeekOrigin.Current:
-                    
+                    if (Position + offset < m_Start)
+                        offset = 0;
+                    else if (Position + offset > m_Start + m_Length)
+                        offset = m_Length;
+                    else
+                        offset = Position + offset;
+
                     break;
                 case SeekOrigin.End:
                     offset = (m_Start + m_Length - offset < 0) ? 0 : m_Start + m_Length - offset;
@@ -104,7 +110,7 @@ namespace Ragnarok.IO.Compression
 
         public override void SetLength(long value)
         {
-            throw new InvalidOperationException();
+            throw new NotSupportedException();
         }
 
         public override void Flush()

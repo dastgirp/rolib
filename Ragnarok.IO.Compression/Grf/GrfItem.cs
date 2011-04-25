@@ -22,8 +22,6 @@ namespace Ragnarok.IO.Compression
 	        ".str"
         };
 
-        private static readonly Encoding NameEncoding = Encoding.GetEncoding(949);
-
         /// <summary>
         /// The parent <see cref="GrfArchive"/>.
         /// </summary>
@@ -94,7 +92,7 @@ namespace Ragnarok.IO.Compression
         /// </summary>
         public string Name
         {
-            get { return m_Name.Substring(m_Name.LastIndexOf('\\')); }
+            get { return m_Name.Substring(m_Name.LastIndexOf('\\') + 1); }
         }
         /// <summary>
         /// The hash created from the full name of this entry.
@@ -119,25 +117,12 @@ namespace Ragnarok.IO.Compression
         {
             uint tmp = 0;
 
-            name = EncodeName(name);
+            name = FilenameEncoding.Encode(name);
 
             for (int i = 0; i < name.Length; i++)
                 tmp = (tmp << 5) + tmp + name.ToUpper()[i];
 
             return tmp;
-        }
-        /// <summary>
-        /// Encodes the name with the proper encoding.
-        /// </summary>
-        /// <param name="name">The name to encode.</param>
-        /// <returns>A <see cref="String"/> with the properly encoded filename.</returns>
-        protected static string EncodeName(string name)
-        {
-            byte[] buffer = new byte[name.Length];
-            IntPtr pName = Marshal.StringToHGlobalAnsi(name);
-            Marshal.Copy(pName, buffer, 0, name.Length);
-            Marshal.FreeHGlobal(pName);
-            return NameEncoding.GetString(buffer).Replace('/', '\\');
         }
 
         internal bool CheckExtension()
@@ -176,7 +161,7 @@ namespace Ragnarok.IO.Compression
                 ret = new GrfFileInfo();
 
             ret.m_Grf = grf;
-            ret.m_Name = EncodeName(name);
+            ret.m_Name = FilenameEncoding.Encode(name);
             ret.m_AlignedCompressedLength = compressedLengthAligned;
             ret.m_CompressedLength = compressedLength;
             ret.m_Length = realLength;

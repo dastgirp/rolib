@@ -4,157 +4,6 @@
         <name>Ragnarok.IO.Compression</name>
     </assembly>
     <members>
-        <member name="T:Ragnarok.IO.Compression.GrfFileFlags">
-            <summary>
-            Provides attributes for a <see cref="T:Ragnarok.IO.Compression.GrfItem"/>.
-            </summary>
-        </member>
-        <member name="F:Ragnarok.IO.Compression.GrfFileFlags.None">
-            <summary>
-            This flag specifies that a <see cref="T:Ragnarok.IO.Compression.GrfItem"/> entry is a directory.
-            </summary>
-        </member>
-        <member name="F:Ragnarok.IO.Compression.GrfFileFlags.File">
-            <summary>
-            This flag specifies that a <see cref="T:Ragnarok.IO.Compression.GrfItem"/> entry is a file. If not set, then the entry is a directory.
-            </summary>
-        </member>
-        <member name="F:Ragnarok.IO.Compression.GrfFileFlags.MixCrypt">
-            <summary>
-            Flag for <see cref="P:Ragnarok.IO.Compression.GrfItem.Flags"/> to specify that the file uses mixed crypto.
-            </summary>
-        </member>
-        <member name="F:Ragnarok.IO.Compression.GrfFileFlags.Des_0x14">
-            <summary>
-            Flag for <see cref="P:Ragnarok.IO.Compression.GrfItem.Flags"/> to specify that only the first 0x14 blocks are encrypted.
-            </summary>
-        </member>
-        <member name="T:Ragnarok.IO.Compression.GrfFileInfo">
-            <summary>
-            A file entry in a <see cref="T:Ragnarok.IO.Compression.GrfArchive"/>.
-            </summary>
-        </member>
-        <member name="T:Ragnarok.IO.Compression.GrfItem">
-            <summary>
-            The base class of an entry in a <see cref="T:Ragnarok.IO.Compression.GrfArchive"/>.
-            </summary>
-        </member>
-        <member name="F:Ragnarok.IO.Compression.GrfItem.m_Grf">
-            <summary>
-            The parent <see cref="T:Ragnarok.IO.Compression.GrfArchive"/>.
-            </summary>
-        </member>
-        <member name="F:Ragnarok.IO.Compression.GrfItem.m_Flags">
-            <summary>
-            The <see cref="T:Ragnarok.IO.Compression.GrfFileFlags"/> for this entry.
-            </summary>
-        </member>
-        <member name="F:Ragnarok.IO.Compression.GrfItem.m_Name">
-            <summary>
-            The name of this entry.
-            </summary>
-        </member>
-        <member name="F:Ragnarok.IO.Compression.GrfItem.m_Hash">
-            <summary>
-            The hash created from the name of this entry.
-            </summary>
-        </member>
-        <member name="F:Ragnarok.IO.Compression.GrfItem.m_AlignedCompressedLength">
-            <summary>
-            The size on the the file on the disk.
-            </summary>
-        </member>
-        <member name="F:Ragnarok.IO.Compression.GrfItem.m_CompressedLength">
-            <summary>
-            The compressed size of the file.
-            </summary>
-        </member>
-        <member name="F:Ragnarok.IO.Compression.GrfItem.m_Length">
-            <summary>
-            The size of the original file.
-            </summary>
-        </member>
-        <member name="F:Ragnarok.IO.Compression.GrfItem.m_Position">
-            <summary>
-            The position in the <see cref="T:Ragnarok.IO.Compression.GrfArchive"/> where this file is located.
-            </summary>
-        </member>
-        <member name="M:Ragnarok.IO.Compression.GrfItem.ExtractTo(System.String)">
-            <summary>
-            Extracts this item to a specific location.
-            </summary>
-            <param name="path">The location where to extract this item to.</param>
-        </member>
-        <member name="M:Ragnarok.IO.Compression.GrfItem.NameHash(System.String)">
-            <summary>
-            Creates a hash from a filename.
-            </summary>
-            <param name="name">The filename.</param>
-            <returns>A hash from the specified filename.</returns>
-        </member>
-        <member name="M:Ragnarok.IO.Compression.GrfItem.EncodeName(System.String)">
-            <summary>
-            Encodes the name with the proper encoding.
-            </summary>
-            <param name="name">The name to encode.</param>
-            <returns>A <see cref="T:System.String"/> with the properly encoded filename.</returns>
-        </member>
-        <member name="P:Ragnarok.IO.Compression.GrfItem.Archive">
-            <summary>
-            The parent <see cref="T:Ragnarok.IO.Compression.GrfArchive"/>.
-            </summary>
-        </member>
-        <member name="P:Ragnarok.IO.Compression.GrfItem.Flags">
-            <summary>
-            The <see cref="T:Ragnarok.IO.Compression.GrfFileFlags"/> for this entry.
-            </summary>
-        </member>
-        <member name="P:Ragnarok.IO.Compression.GrfItem.FullName">
-            <summary>
-            The full name of this entry.
-            </summary>
-        </member>
-        <member name="P:Ragnarok.IO.Compression.GrfItem.Name">
-            <summary>
-            The name of this entry.
-            </summary>
-        </member>
-        <member name="P:Ragnarok.IO.Compression.GrfItem.Hash">
-            <summary>
-            The hash created from the full name of this entry.
-            </summary>
-        </member>
-        <member name="M:Ragnarok.IO.Compression.GrfFileInfo.ExtractTo(System.String)">
-            <summary>
-            Extracts the file to a specific location.
-            </summary>
-            <param name="path">The location where to extract this file to.</param>
-        </member>
-        <member name="P:Ragnarok.IO.Compression.GrfFileInfo.AlignedCompressedLength">
-            <summary>
-            The size on the the file on the disk.
-            </summary>
-        </member>
-        <member name="P:Ragnarok.IO.Compression.GrfFileInfo.CompressedLength">
-            <summary>
-            The compressed size of the file.
-            </summary>
-        </member>
-        <member name="P:Ragnarok.IO.Compression.GrfFileInfo.Length">
-            <summary>
-            The size of the original file.
-            </summary>
-        </member>
-        <member name="P:Ragnarok.IO.Compression.GrfFileInfo.Position">
-            <summary>
-            The position in the <see cref="T:Ragnarok.IO.Compression.GrfArchive"/> where this file is located.
-            </summary>
-        </member>
-        <member name="P:Ragnarok.IO.Compression.GrfFileInfo.Data">
-            <summary>
-            The contents of the file.
-            </summary>
-        </member>
         <member name="T:Ragnarok.IO.Compression.GrfItemCollection">
             <summary>
             A class within a <see cref="T:Ragnarok.IO.Compression.GrfArchive"/> that contains all the entries.
@@ -294,6 +143,13 @@
             <param name="item">The <see cref="T:Ragnarok.IO.Compression.GrfItem"/>.</param>
             <returns>A <see cref="T:System.Boolean"/> indicating wether or not an item exits in the <see cref="T:Ragnarok.IO.Compression.GrfArchive"/>.</returns>
         </member>
+        <member name="M:Ragnarok.IO.Compression.GrfItemCollection.Contains(System.String)">
+            <summary>
+            Determines wether a path exits within the <see cref="T:Ragnarok.IO.Compression.GrfArchive"/>.
+            </summary>
+            <param name="name">The path for the item.</param>
+            <returns>A <see cref="T:System.Boolean"/> indicating wether or not an item exits in the <see cref="T:Ragnarok.IO.Compression.GrfArchive"/>.</returns>
+        </member>
         <member name="M:Ragnarok.IO.Compression.GrfItemCollection.CopyTo(Ragnarok.IO.Compression.GrfItem[],System.Int32)">
             <summary>
             Copies all <see cref="T:Ragnarok.IO.Compression.GrfItem"/> entries to an array.
@@ -375,6 +231,94 @@
             Thrown when the <see cref="T:Ragnarok.IO.Compression.GrfArchive"/> is closed.
             </exception>
         </member>
+        <member name="T:Ragnarok.IO.Compression.GrfItem">
+            <summary>
+            The base class of an entry in a <see cref="T:Ragnarok.IO.Compression.GrfArchive"/>.
+            </summary>
+        </member>
+        <member name="F:Ragnarok.IO.Compression.GrfItem.m_Grf">
+            <summary>
+            The parent <see cref="T:Ragnarok.IO.Compression.GrfArchive"/>.
+            </summary>
+        </member>
+        <member name="F:Ragnarok.IO.Compression.GrfItem.m_Flags">
+            <summary>
+            The <see cref="T:Ragnarok.IO.Compression.GrfFileFlags"/> for this entry.
+            </summary>
+        </member>
+        <member name="F:Ragnarok.IO.Compression.GrfItem.m_Name">
+            <summary>
+            The name of this entry.
+            </summary>
+        </member>
+        <member name="F:Ragnarok.IO.Compression.GrfItem.m_Hash">
+            <summary>
+            The hash created from the name of this entry.
+            </summary>
+        </member>
+        <member name="F:Ragnarok.IO.Compression.GrfItem.m_AlignedCompressedLength">
+            <summary>
+            The size on the the file on the disk.
+            </summary>
+        </member>
+        <member name="F:Ragnarok.IO.Compression.GrfItem.m_CompressedLength">
+            <summary>
+            The compressed size of the file.
+            </summary>
+        </member>
+        <member name="F:Ragnarok.IO.Compression.GrfItem.m_Length">
+            <summary>
+            The size of the original file.
+            </summary>
+        </member>
+        <member name="F:Ragnarok.IO.Compression.GrfItem.m_Position">
+            <summary>
+            The position in the <see cref="T:Ragnarok.IO.Compression.GrfArchive"/> where this file is located.
+            </summary>
+        </member>
+        <member name="M:Ragnarok.IO.Compression.GrfItem.ExtractTo(System.String)">
+            <summary>
+            Extracts this item to a specific location.
+            </summary>
+            <param name="path">The location where to extract this item to.</param>
+        </member>
+        <member name="M:Ragnarok.IO.Compression.GrfItem.NameHash(System.String)">
+            <summary>
+            Creates a hash from a filename.
+            </summary>
+            <param name="name">The filename.</param>
+            <returns>A hash from the specified filename.</returns>
+        </member>
+        <member name="P:Ragnarok.IO.Compression.GrfItem.Archive">
+            <summary>
+            The parent <see cref="T:Ragnarok.IO.Compression.GrfArchive"/>.
+            </summary>
+        </member>
+        <member name="P:Ragnarok.IO.Compression.GrfItem.Flags">
+            <summary>
+            The <see cref="T:Ragnarok.IO.Compression.GrfFileFlags"/> for this entry.
+            </summary>
+        </member>
+        <member name="P:Ragnarok.IO.Compression.GrfItem.FullName">
+            <summary>
+            The full name of this entry.
+            </summary>
+        </member>
+        <member name="P:Ragnarok.IO.Compression.GrfItem.Name">
+            <summary>
+            The name of this entry.
+            </summary>
+        </member>
+        <member name="P:Ragnarok.IO.Compression.GrfItem.Hash">
+            <summary>
+            The hash created from the full name of this entry.
+            </summary>
+        </member>
+        <member name="T:Ragnarok.IO.Compression.GrfException">
+            <summary>
+            Represents the error that can occur while handling the <see cref="T:Ragnarok.IO.Compression.GrfArchive"/> class.
+            </summary>
+        </member>
         <member name="T:Ragnarok.IO.Compression.GrfDirectoryInfo">
             <summary>
             A directory entry in a <see cref="T:Ragnarok.IO.Compression.GrfArchive"/>.
@@ -386,9 +330,40 @@
             </summary>
             <param name="path">The location where to extract this directory to.</param>
         </member>
-        <member name="T:Ragnarok.IO.Compression.GrfException">
+        <member name="T:Ragnarok.IO.Compression.GrfFileInfo">
             <summary>
-            Represents the error that can occur while handling the <see cref="T:Ragnarok.IO.Compression.GrfArchive"/> class.
+            A file entry in a <see cref="T:Ragnarok.IO.Compression.GrfArchive"/>.
+            </summary>
+        </member>
+        <member name="M:Ragnarok.IO.Compression.GrfFileInfo.ExtractTo(System.String)">
+            <summary>
+            Extracts the file to a specific location.
+            </summary>
+            <param name="path">The location where to extract this file to.</param>
+        </member>
+        <member name="P:Ragnarok.IO.Compression.GrfFileInfo.AlignedCompressedLength">
+            <summary>
+            The size on the the file on the disk.
+            </summary>
+        </member>
+        <member name="P:Ragnarok.IO.Compression.GrfFileInfo.CompressedLength">
+            <summary>
+            The compressed size of the file.
+            </summary>
+        </member>
+        <member name="P:Ragnarok.IO.Compression.GrfFileInfo.Length">
+            <summary>
+            The size of the original file.
+            </summary>
+        </member>
+        <member name="P:Ragnarok.IO.Compression.GrfFileInfo.Position">
+            <summary>
+            The position in the <see cref="T:Ragnarok.IO.Compression.GrfArchive"/> where this file is located.
+            </summary>
+        </member>
+        <member name="P:Ragnarok.IO.Compression.GrfFileInfo.Data">
+            <summary>
+            The contents of the file.
             </summary>
         </member>
         <member name="T:Ragnarok.IO.Compression.Cryptography.GrfCrypt">
@@ -484,6 +459,31 @@
             The keyschedule used for the DES implementation. The default is an array filled with 0x80 0 bytes.
             </summary>
         </member>
+        <member name="T:Ragnarok.IO.Compression.GrfFileFlags">
+            <summary>
+            Provides attributes for a <see cref="T:Ragnarok.IO.Compression.GrfItem"/>.
+            </summary>
+        </member>
+        <member name="F:Ragnarok.IO.Compression.GrfFileFlags.None">
+            <summary>
+            This flag specifies that a <see cref="T:Ragnarok.IO.Compression.GrfItem"/> entry is a directory.
+            </summary>
+        </member>
+        <member name="F:Ragnarok.IO.Compression.GrfFileFlags.File">
+            <summary>
+            This flag specifies that a <see cref="T:Ragnarok.IO.Compression.GrfItem"/> entry is a file. If not set, then the entry is a directory.
+            </summary>
+        </member>
+        <member name="F:Ragnarok.IO.Compression.GrfFileFlags.MixCrypt">
+            <summary>
+            Flag for <see cref="P:Ragnarok.IO.Compression.GrfItem.Flags"/> to specify that the file uses mixed crypto.
+            </summary>
+        </member>
+        <member name="F:Ragnarok.IO.Compression.GrfFileFlags.Des_0x14">
+            <summary>
+            Flag for <see cref="P:Ragnarok.IO.Compression.GrfItem.Flags"/> to specify that only the first 0x14 blocks are encrypted.
+            </summary>
+        </member>
         <member name="T:Ragnarok.IO.Compression.GrfArchive">
             <summary>
             A class for interacting with Ragnarok Online grf files.
@@ -539,18 +539,13 @@
             Writes all unwritten data to the disk and releases all data.
             </summary>
         </member>
-        <member name="M:Ragnarok.IO.Compression.GrfArchive.Dispose">
-            <summary>
-            Writes all unwritten data to the disk and releases all data.
-            </summary>
-        </member>
         <member name="M:Ragnarok.IO.Compression.GrfArchive.Open(System.String,System.Boolean)">
             <summary>
             Opens an existing <see cref="T:Ragnarok.IO.Compression.GrfArchive"/>.
             </summary>
             <param name="filename">The path to the <see cref="T:Ragnarok.IO.Compression.GrfArchive"/>.</param>
             <param name="isreadonly">Wether or not to open the file as read only.</param>
-            <returns></returns>
+            <returns>The opened <see cref="T:Ragnarok.IO.Compression.GrfArchive"/>.</returns>
         </member>
         <member name="P:Ragnarok.IO.Compression.GrfArchive.IsReadOnly">
             <summary>

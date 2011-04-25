@@ -200,24 +200,14 @@ namespace Ragnarok.IO.Compression
         /// </summary>
         public void Close()
         {
-            Dispose();
-        }
-        /// <summary>
-        /// Writes all unwritten data to the disk and releases all data.
-        /// </summary>
-        public void Dispose()
-        {
-            Flush();
-
-            Dispose(true);
-            GC.SuppressFinalize(this);
+            ((IDisposable)this).Dispose();
         }
         /// <summary>
         /// Opens an existing <see cref="GrfArchive"/>.
         /// </summary>
         /// <param name="filename">The path to the <see cref="GrfArchive"/>.</param>
         /// <param name="isreadonly">Wether or not to open the file as read only.</param>
-        /// <returns></returns>
+        /// <returns>The opened <see cref="GrfArchive"/>.</returns>
         public static GrfArchive Open(string filename, bool isreadonly)
         {
             if (string.IsNullOrEmpty(filename))
@@ -691,6 +681,14 @@ namespace Ragnarok.IO.Compression
             }
 
             IsDisposed = true;
+        }
+
+        void IDisposable.Dispose()
+        {
+            Flush();
+
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
 
         #endregion
