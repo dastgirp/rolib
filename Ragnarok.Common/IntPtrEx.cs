@@ -123,6 +123,10 @@ namespace System
                 return (T)((object)Marshal.ReadInt32(m_Pointer, offset));
             else if (typeof(T) == typeof(long))
                 return (T)((object)Marshal.ReadInt64(m_Pointer, offset));
+            else if (typeof(T) == typeof(float))
+                return (T)((object)BitConverter.ToSingle(BitConverter.GetBytes(Read<int>(offset)), 0));
+            else if (typeof(T) == typeof(double))
+                return (T)((object)BitConverter.ToDouble(BitConverter.GetBytes(Read<long>(offset)), 0));
             else if (typeof(T) == typeof(string))
                 return (T)((object)Marshal.PtrToStringAnsi(new IntPtr(m_Pointer.ToInt64() + offset)));
             else if (default(T) is ValueType)
@@ -149,6 +153,10 @@ namespace System
                 Marshal.WriteInt32(m_Pointer, offset, (int)((object)value));
             else if (typeof(T) == typeof(long))
                 Marshal.WriteInt64(m_Pointer, offset, (long)((object)value));
+            else if (typeof(T) == typeof(float))
+                Marshal.WriteInt32(m_Pointer, offset, BitConverter.ToInt32(BitConverter.GetBytes((float)((object)value)), 0));
+            else if (typeof(T) == typeof(double))
+                Marshal.WriteInt64(m_Pointer, offset, BitConverter.ToInt64(BitConverter.GetBytes((double)((object)value)), 0));
             else if (typeof(T) == typeof(string))
                 Marshal.Copy(((string)(object)value).ToCharArray(), 0, new IntPtr(m_Pointer.ToInt64() + offset), ((string)(object)value).Length);
             else if (default(T) is ValueType)
@@ -165,13 +173,6 @@ namespace System
                 m_Handle.Free();
             else if (m_Free == FreeParams.FreeHGlobal)
                 Marshal.FreeHGlobal(m_Pointer);
-        }
-        /// <summary>
-        /// Frees all unmanaged memory.
-        /// </summary>
-        public void Dispose()
-        {
-            Free();
         }
         /// <summary>
         /// Creates a new <see cref="IntPtrEx"/> from a <see cref="IntPtr"/>.
@@ -200,21 +201,6 @@ namespace System
         {
             return Marshal.PtrToStringAnsi(ptr.m_Pointer);
         }
-#if UNUSED
-        /// <summary>
-        /// Creates a new <see cref="IntPtrEx"/> from a <see cref="String"/>.
-        /// </summary>
-        /// <remarks>
-        /// Do not forget to free the <see cref="IntPtrEx"/>, using <see cref="IntPtrEx.Free()"/> method,
-        /// after you've used it like this or you will create a memory leak.
-        /// </remarks>
-        /// <param name="str">The string to use the memory location of.</param>
-        /// <returns>The <see cref="IntPtrEx"/>.</returns>
-        public static implicit operator IntPtrEx(string str)
-        {
-            return new IntPtrEx(str);
-        }
-#endif
         /// <summary>
         /// Adds a <see cref="Int32"/> to the pointer.
         /// </summary>
@@ -252,6 +238,11 @@ namespace System
         public static IntPtrEx operator --(IntPtrEx ptr)
         {
             return new IntPtrEx(ptr.m_Pointer.ToInt64() - 1);
+        }
+
+        void IDisposable.Dispose()
+        {
+            Free();
         }
 
         private enum FreeParams : byte { None, FreeHandle, FreeHGlobal }

@@ -160,6 +160,34 @@
         }
 
         #endregion
+        #region Float
+
+        /// <summary>
+        /// Converts a <see cref="Single"/> to little endian notation.
+        /// </summary>
+        /// <param name="input">The <see cref="Single"/> to convert.</param>
+        /// <returns>The converted <see cref="Single"/>.</returns>
+        public static Single LittleEndian(Single input)
+        {
+            if (BitConverter.IsLittleEndian)
+                return input;
+
+            return BitConverter.ToSingle(BitConverter.GetBytes(Swap(BitConverter.ToUInt32(BitConverter.GetBytes(input), 0))), 0); ;
+        }
+        /// <summary>
+        /// Converts a <see cref="Single"/> to big endian notation.
+        /// </summary>
+        /// <param name="input">The <see cref="Single"/> to convert.</param>
+        /// <returns>The converted <see cref="Single"/>.</returns>
+        public static Single BigEndian(Single input)
+        {
+            if (!BitConverter.IsLittleEndian)
+                return input;
+
+            return BitConverter.ToSingle(BitConverter.GetBytes(Swap(BitConverter.ToUInt32(BitConverter.GetBytes(input), 0))), 0); ;
+        }
+
+        #endregion
         #region Private API
 
 #if EXCLUDE
